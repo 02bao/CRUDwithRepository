@@ -24,24 +24,40 @@ namespace CRUDwithRepository.Infastructure.implementation
             return products;
         }
 
-        public Task<Product> GetById(int id)
+        public async Task<Product> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Products.FindAsync(id);
         }
-        public Task Add(Product model)
+        public async Task Add(Product model)
         {
-            throw new NotImplementedException();
+            await _context.Products.AddAsync(model);
+            await Save();
+        }
+        public async Task Update(Product model)
+        {
+            var product = await _context.Products.FindAsync(model.Id);
+            if(product != null) 
+            {
+                product.ProductName = model.ProductName;
+                product.Price = model.Price;
+                product.Qty = model.Qty;
+                _context.Update(product);
+                await Save();
+            }
+        }
+        public async Task Delete(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if( product != null ) 
+            {
+                _context.Products.Remove(product);
+                await Save();
+            }
+        }
+        private async Task Save()
+        {
+            await _context.SaveChangesAsync();
         }
 
-        public Task Update(Product model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-        
     }
 }
