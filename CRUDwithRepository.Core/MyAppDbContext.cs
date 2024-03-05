@@ -13,5 +13,17 @@ namespace CRUDwithRepository.Core
         {
         }
         public DbSet<Product> Products { get; set; }
+        public static string configSql = "Data Source=MSI;Initial Catalog=CRUDwithRepository;Integrated Security=True;Trust Server Certificate=True";
+        // sửa chỗ này thành cái database connection string của anh nha
+        // từ giờ kệ cái file appsettings.json đi nghe, từ giờ mình sẽ config ở đây
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer(configSql);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        }
     }
 }
