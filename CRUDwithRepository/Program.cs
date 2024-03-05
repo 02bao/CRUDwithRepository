@@ -14,7 +14,7 @@ namespace CRUDwithRepository
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<MyAppDbContext>(options => options.UseSqlServer
-            ( builder.Configuration.GetConnectionString("DefaultConnection")));
+            ( MyAppDbContext.configSql));
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
